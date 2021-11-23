@@ -17,22 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import it.prova.gestionedottori.model.Dottore;
 import it.prova.gestionedottori.service.DottoreService;
 
-
 @RestController
 @RequestMapping(value = "/api/dottore", produces = { MediaType.APPLICATION_JSON_VALUE })
-public class DottoreController {
-
+public class DottoreRestController {
 
 	@Autowired
 	private DottoreService dottoreService;
-	
-	@Autowired
-	private WebClient webClient;
 
 	@GetMapping("/{idInput}")
 	public Dottore getDottore(@PathVariable(required = true) Long idInput) {
@@ -74,15 +68,14 @@ public class DottoreController {
 	public void deleteDottore(@PathVariable(required = true) Long id) {
 		dottoreService.delete(dottoreService.get(id));
 	}
-	
+
 	@GetMapping("/verifica/{codiceDipendente}")
-	public void verificaDottore(@PathVariable(required=true) String codiceDipendente) {
+	public void verificaDottore(@PathVariable(required = true) String codiceDipendente) {
 		dottoreService.findByCodice(codiceDipendente);
 	}
-	
+
 	@PostMapping("/impostaInVisita")
-	public void impostaInVisita(@RequestBody String codiceDipendente) {
-		
-		Dottore dottore= dottoreService.findByCodice(codiceDipendente);
+	public Dottore impostaInVisita(@RequestBody String codiceDipendente) {
+		return dottoreService.impostaInVisita(codiceDipendente);
 	}
 }

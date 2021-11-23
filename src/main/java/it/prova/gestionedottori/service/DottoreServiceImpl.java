@@ -86,5 +86,14 @@ public class DottoreServiceImpl implements DottoreService {
 	public Dottore findByCodice(String codice) {
 		return dottoreRepository.findByCodiceDipendente(codice);
 	}
+	
+	@Override
+	public Dottore impostaInVisita(String codice) {
+		
+		Dottore dottore=dottoreRepository.findByCodiceDipendente(codice);
+		dottore.setInVisita(true);
+		return dottore;
+		
+	}
 
 }
