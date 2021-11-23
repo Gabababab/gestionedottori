@@ -19,4 +19,6 @@ public interface DottoreService{
 	
 	void delete(Dottore input);
 
+	Dottore findByCodice(String codice);
+
 }

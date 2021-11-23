@@ -81,5 +81,10 @@ public class DottoreServiceImpl implements DottoreService {
 	public void delete(Dottore input) {
 		dottoreRepository.delete(input);
 	}
+	
+	@Override
+	public Dottore findByCodice(String codice) {
+		return dottoreRepository.findByCodiceDipendente(codice);
+	}
 
 }
