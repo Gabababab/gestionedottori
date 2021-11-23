@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import it.prova.gestionedottori.exceptions.DottoreNotFoundException;
 import it.prova.gestionedottori.model.Dottore;
 import it.prova.gestionedottori.repository.DottoreRepository;
 
