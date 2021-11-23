@@ -70,13 +70,13 @@ public class DottoreRestController {
 		dottoreService.delete(dottoreService.get(id));
 	}
 
-	@GetMapping("/{codiceDipendente}")
+	@GetMapping("/verifica/{codiceDipendente}")
 	public DottoreDTO verificaDottore(@PathVariable(required = true) String codiceDipendente) {
 		return DottoreDTO.buildDottoreDTODTOFromModel( dottoreService.findByCodice(codiceDipendente));
 	}
 
 	@PostMapping("/impostaInVisita")
-	public DottoreDTO impostaInVisita(@RequestBody String codiceDipendente) {
-		return DottoreDTO.buildDottoreDTODTOFromModel(dottoreService.impostaInVisita(codiceDipendente));
+	public DottoreDTO impostaInVisita(@RequestBody DottoreDTO dottore) {
+		return DottoreDTO.buildDottoreDTODTOFromModel(dottoreService.impostaInVisita(dottore.buildDottoreModel()));
 	}
 }

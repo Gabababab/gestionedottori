@@ -32,6 +32,15 @@ public class Dottore {
 		this.inVisita = inVisita;
 	}
 
+	public Dottore(String nome, String cognome, String codiceDipendente, boolean inServizio, boolean inVisita) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codiceDipendente = codiceDipendente;
+		this.inServizio = inServizio;
+		this.inVisita = inVisita;
+	}
+
 	public Long getId() {
 		return id;
 	}

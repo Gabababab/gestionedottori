@@ -74,8 +74,8 @@ public class DottoreDTO {
 		this.inVisita = inVisita;
 	}
 	
-	public DottoreDTO buildDottoreDTOModel() {
-		return new DottoreDTO(this.id, this.nome, this.cognome, this.codiceDipendente,
+	public Dottore buildDottoreModel() {
+		return new Dottore(this.id, this.nome, this.cognome, this.codiceDipendente,
 				this.inServizio, this.inVisita);
 	}
 

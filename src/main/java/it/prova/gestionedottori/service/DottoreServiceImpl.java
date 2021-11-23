@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import it.prova.gestionedottori.exceptions.DottoreNonInServizioException;
 import it.prova.gestionedottori.exceptions.DottoreNotFoundException;
 import it.prova.gestionedottori.model.Dottore;
 import it.prova.gestionedottori.repository.DottoreRepository;
@@ -88,12 +89,14 @@ public class DottoreServiceImpl implements DottoreService {
 	}
 	
 	@Override
-	public Dottore impostaInVisita(String codice) {
+	public Dottore impostaInVisita(Dottore dottore) {
 		
-		Dottore dottore=dottoreRepository.findByCodiceDipendente(codice);
-		dottore.setInVisita(true);
-		return dottore;
-		
+		if(dottore.isInServizio()) {
+			Dottore dottoreInVisita=dottoreRepository.findByCodiceDipendente(dottore.getCodiceDipendente());
+			dottoreInVisita.setInVisita(true);
+			return dottoreInVisita;
+		}
+		throw new DottoreNonInServizioException("Il dottore selezionato non è in servizio");
 	}
 
 }
