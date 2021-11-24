@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.prova.gestionedottori.dto.DottoreDTO;
+import it.prova.gestionedottori.exceptions.DottoreNotFoundException;
 import it.prova.gestionedottori.model.Dottore;
 import it.prova.gestionedottori.service.DottoreService;
 
@@ -53,18 +54,33 @@ public class DottoreRestController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Dottore createNewDottore(@RequestBody Dottore dottoreInput) {
+		
+		if(dottoreInput.getId()!=null)
+			throw new RuntimeException("Non è ammesso fornire un id per la creazione");
+		
+		
+		
+		
 		return dottoreService.save(dottoreInput);
+		
+		
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Dottore updateDottore(@RequestBody Dottore dottoreInput, @PathVariable Long id) {
 		Dottore dottoreToUpdate = dottoreService.get(id);
-		dottoreToUpdate.setNome(dottoreInput.getNome());
-		dottoreToUpdate.setCognome(dottoreInput.getCognome());
-		dottoreToUpdate.setCodiceDipendente(dottoreInput.getCodiceDipendente());
+		
+		
+		if(dottoreInput.getNome()!=null)
+			dottoreToUpdate.setNome(dottoreInput.getNome());
+		if(dottoreInput.getCognome()!=null)
+			dottoreToUpdate.setCognome(dottoreInput.getCognome());
+		if(dottoreInput.getCodiceDipendente()!=null)
+			dottoreToUpdate.setCodiceDipendente(dottoreInput.getCodiceDipendente());
 		dottoreToUpdate.setInServizio(dottoreInput.isInServizio());
 		dottoreToUpdate.setInVisita(dottoreInput.isInVisita());
+		
 		return dottoreService.save(dottoreToUpdate);
 	}
 
@@ -81,6 +97,11 @@ public class DottoreRestController {
 
 	@PostMapping("/impostaInVisita")
 	public DottoreDTO impostaInVisita(@RequestBody DottoreDTO dottore) {
-		return DottoreDTO.buildDottoreDTODTOFromModel(dottoreService.impostaInVisita(dottore.buildDottoreModel()));
+		
+		Dottore dottoreInVisita=dottoreService.impostaInVisita(dottore.buildDottoreModel());
+		if (dottoreInVisita == null || dottoreInVisita.getId() == null)
+			throw new DottoreNotFoundException("Dottore non trovato con codice specificato");
+		
+		return DottoreDTO.buildDottoreDTODTOFromModel(dottoreInVisita);
 	}
 }
