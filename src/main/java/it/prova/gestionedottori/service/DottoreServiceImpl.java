@@ -98,5 +98,14 @@ public class DottoreServiceImpl implements DottoreService {
 		}
 		throw new DottoreNonInServizioException("Il dottore selezionato non è in servizio");
 	}
+	
+	@Override
+	public Dottore impostaInVisita(String codiceDipendente) {
+		
+		Dottore dottoreDaImpostare = dottoreRepository.findByCodiceDipendente(codiceDipendente);
+		dottoreDaImpostare.setInVisita(true);
+		dottoreRepository.save(dottoreDaImpostare);
+		return dottoreDaImpostare;
+	}
 
 }

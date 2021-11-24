@@ -23,4 +23,6 @@ public interface DottoreService{
 
 	Dottore impostaInVisita(Dottore dottore);
 
+	Dottore impostaInVisita(String codiceDipendente);
+
 }

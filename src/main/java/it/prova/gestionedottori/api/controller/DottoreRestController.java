@@ -96,12 +96,13 @@ public class DottoreRestController {
 	}
 
 	@PostMapping("/impostaInVisita")
-	public DottoreDTO impostaInVisita(@RequestBody DottoreDTO dottore) {
+	public DottoreDTO impostaInVisita(@RequestBody DottoreDTO dottoreInput) {
 		
-		Dottore dottoreInVisita=dottoreService.impostaInVisita(dottore.buildDottoreModel());
-		if (dottoreInVisita == null || dottoreInVisita.getId() == null)
-			throw new DottoreNotFoundException("Dottore non trovato con codice specificato");
+		Dottore dottoreDaImpostare = dottoreService.impostaInVisita(dottoreInput.getCodiceDipendente());
 		
-		return DottoreDTO.buildDottoreDTODTOFromModel(dottoreInVisita);
+		if(dottoreDaImpostare == null || dottoreDaImpostare.getId() == null)
+			throw new DottoreNotFoundException("Dottore non trovato");
+		
+		return DottoreDTO.buildDottoreDTODTOFromModel(dottoreDaImpostare);
 	}
 }
